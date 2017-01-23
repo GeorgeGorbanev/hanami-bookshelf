@@ -12,7 +12,7 @@ RSpec.describe Web::Views::Books::Index do
 
   describe 'when there are no books' do
     it 'shows a placeholder message' do
-      expect(rendered).to have_html('<p class="placeholder">There are no books yet.</p>')
+      expect(rendered).to include('<p class="placeholder">There are no books yet.</p>')
     end
   end
 
@@ -22,13 +22,13 @@ RSpec.describe Web::Views::Books::Index do
     let(:exposures) { Hash[books: [book1, book2]] }
 
     it 'lists them all' do
-      expect(rendered).to have_tag 'div.book', count: 2
+      expect(rendered.scan('div class="book"').size).to eq 2
       expect(rendered).to have_content('Refactoring')
       expect(rendered).to have_content('Domain Driven Design')
     end
 
     it 'hides the placeholder message' do
-      expect(rendered).not_to have_html('<p class="placeholder">There are no books yet.</p>')
+      expect(rendered).not_to include('<p class="placeholder">There are no books yet.</p>')
     end
   end
 
